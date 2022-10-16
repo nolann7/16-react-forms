@@ -43,7 +43,7 @@ const inputNameClasses = inputNameIsValid ? 'form-control': 'form-control invali
           onChange={inputNameChangeHandler}
           value={enteredName}
         />
-        {!inputNameIsValid && <p className='error-text'>Input must have some text</p>}
+        {!inputNameIsValid && <p className='error-text'>Name must not be empty</p>}
       </div>
       <div className="form-actions">
         <button>Submit</button>
