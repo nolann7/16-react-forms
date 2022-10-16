@@ -3,7 +3,8 @@ import { useState, useRef } from 'react';
 const SimpleInput = props => {
   const inputNameRef = useRef();
   const [enteredName, setEnteredName] = useState('');
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(true)
+  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
+  const [enteredNameIsTouched, setEnteredNameIsTouched] = useState(false);
 
   const inputNameChangeHandler = e => {
     // 1-st path
@@ -12,13 +13,15 @@ const SimpleInput = props => {
   const submitFormHandler = e => {
     e.preventDefault();
 
+    setEnteredNameIsTouched(true);
+
     // validating name input for blank input
-    if (enteredName.trim() === ''){
-      setEnteredNameIsValid(false)
+    if (enteredName.trim() === '') {
+      setEnteredNameIsValid(false);
       return;
     }
 
-    setEnteredNameIsValid(true)
+    setEnteredNameIsValid(true);
 
     console.log(enteredName);
 
@@ -29,8 +32,11 @@ const SimpleInput = props => {
     // inputNameRef.current.value = '' // NOT IDIAL cause we shouldnt change DOM without react
     setEnteredName('');
   };
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameIsTouched;
 
-const inputNameClasses = enteredNameIsValid ? 'form-control': 'form-control invalid'
+  const inputNameClasses = nameInputIsInvalid
+    ? 'form-control invalid'
+    : 'form-control';
 
   return (
     <form onSubmit={submitFormHandler}>
@@ -43,7 +49,9 @@ const inputNameClasses = enteredNameIsValid ? 'form-control': 'form-control inva
           onChange={inputNameChangeHandler}
           value={enteredName}
         />
-        {!enteredNameIsValid && <p className='error-text'>Name must not be empty</p>}
+        {nameInputIsInvalid && (
+          <p className="error-text">Name must not be empty</p>
+        )}
       </div>
       <div className="form-actions">
         <button>Submit</button>
