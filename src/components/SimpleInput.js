@@ -11,6 +11,11 @@ const SimpleInput = props => {
   const submitFormHandler = e => {
     e.preventDefault();
 
+    // validating name input for blank input
+    if (enteredName.trim() === ''){
+      return;
+    }
+
     console.log(enteredName);
 
     // 2-nd path
