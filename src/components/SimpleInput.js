@@ -1,13 +1,18 @@
 import { useState } from 'react';
+import useInput from '../hooks/use-input';
 
 const SimpleInput = props => {
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredNameIsTouched, setEnteredNameIsTouched] = useState(false);
+  const {
+    enteredValue: enteredName,
+    enteredValueIsValid: enteredNameIsValid,
+    valueInputIsInvalid: nameInputIsInvalid,
+    valueInputChangeHandler: nameInputChangeHandler,
+    valueInputBlurHandler: nameInputBlurHandler,
+    reset,
+  } = useInput(value => value.trim() !== '');
+
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredEmailIsTouched, setEnteredEmailIsTouched] = useState(false);
-
-  const enteredNameIsValid = enteredName.trim() !== '';
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameIsTouched;
 
   const mailformat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const enteredEmailIsValid = mailformat.test(enteredEmail);
@@ -19,16 +24,10 @@ const SimpleInput = props => {
     formIsValid = true;
   }
 
-  const nameInputChangeHandler = e => {
-    setEnteredName(e.target.value);
-  };
   const emailInputChangeHandler = e => {
     setEnteredEmail(e.target.value);
   };
 
-  const nameInputBlurHandler = () => {
-    setEnteredNameIsTouched(true);
-  };
   const emailInputBlurHandler = () => {
     setEnteredEmailIsTouched(true);
   };
@@ -36,15 +35,11 @@ const SimpleInput = props => {
   const submitFormHandler = e => {
     e.preventDefault();
 
-    setEnteredNameIsTouched(true);
-    setEnteredEmailIsTouched(true);
-
     if (!enteredNameIsValid || !enteredEmailIsValid) return;
     console.log(enteredName);
     console.log(enteredEmail);
 
-    setEnteredName('');
-    setEnteredNameIsTouched(false);
+    reset();
     setEnteredEmail('');
     setEnteredEmailIsTouched(false);
   };
