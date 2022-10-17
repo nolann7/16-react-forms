@@ -4,7 +4,7 @@ const SimpleInput = () => {
   const {
     enteredValue: enteredName,
     enteredValueIsValid: enteredNameIsValid,
-    valueInputIsInvalid: nameInputIsInvalid,
+    valueInputHasError: nameInputHasError,
     valueInputChangeHandler: nameInputChangeHandler,
     valueInputBlurHandler: nameInputBlurHandler,
     reset:resetNameInput,
@@ -13,7 +13,7 @@ const SimpleInput = () => {
   const {
     enteredValue: enteredEmail,
     enteredValueIsValid: enteredEmailIsValid,
-    valueInputIsInvalid: emailInputIsInvalid,
+    valueInputHasError: emailInputHasError,
     valueInputChangeHandler: emailInputChangeHandler,
     valueInputBlurHandler: emailInputBlurHandler,
     reset:resetEmailInput,
@@ -38,10 +38,10 @@ const SimpleInput = () => {
     resetEmailInput();
   };
 
-  const nameInputClasses = nameInputIsInvalid
+  const nameInputClasses = nameInputHasError
     ? 'form-control invalid'
     : 'form-control';
-  const emailInputClasses = emailInputIsInvalid
+  const emailInputClasses = emailInputHasError
     ? 'form-control invalid'
     : 'form-control';
 
@@ -56,7 +56,7 @@ const SimpleInput = () => {
           onBlur={nameInputBlurHandler}
           value={enteredName}
         />
-        {nameInputIsInvalid && (
+        {nameInputHasError && (
           <p className="error-text">Name must not be empty</p>
         )}
       </div>
@@ -69,7 +69,7 @@ const SimpleInput = () => {
           onBlur={emailInputBlurHandler}
           value={enteredEmail}
         />
-        {emailInputIsInvalid && (
+        {emailInputHasError && (
           <p className="error-text">Email must be valid</p>
         )}
       </div>

@@ -5,7 +5,7 @@ const useInput = validateFn => {
   const [enteredValueIsTouched, setEnteredValueIsTouched] = useState(false);
 
   const enteredValueIsValid = validateFn(enteredValue);
-  const valueInputIsInvalid = !enteredValueIsValid && enteredValueIsTouched;
+  const valueInputHasError = !enteredValueIsValid && enteredValueIsTouched;
 
   const valueInputChangeHandler = e => {
     setEnteredValue(e.target.value);
@@ -22,7 +22,7 @@ const useInput = validateFn => {
   return {
     enteredValue:enteredValue,
     enteredValueIsValid:enteredValueIsValid,
-    valueInputIsInvalid:valueInputIsInvalid,
+    valueInputHasError:valueInputHasError,
     valueInputChangeHandler:valueInputChangeHandler,
     valueInputBlurHandler:valueInputBlurHandler,
     reset,
